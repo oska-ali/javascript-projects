@@ -1,84 +1,115 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>JavaScript Projects</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript Projects</title>
 
-    <style>
-        /* Gallery */
-        .gallery img {
-            width: 200px;
-            margin: 10px;
-            cursor: pointer;
-        }
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+    }
 
-        /* Lightbox */
-        #lightbox {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            display: none;
-            justify-content: center;
-            align-items: center;
-        }
+    /* Gallery */
+    .gallery {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
 
-        #lightbox img {
-            max-width: 90%;
-            max-height: 90%;
-        }
+    .gallery img {
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+      cursor: pointer;
+      border-radius: 8px;
+    }
 
-        #close {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            font-size: 40px;
-            color: white;
-            cursor: pointer;
-        }
-    </style>
+    /* Lightbox */
+    #lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 20px;
+    }
+
+    #lightbox img {
+      max-width: 95vw;
+      max-height: 85vh;
+      border-radius: 10px;
+    }
+
+    #close {
+      position: absolute;
+      top: 16px;
+      right: 22px;
+      font-size: 40px;
+      color: #fff;
+      cursor: pointer;
+      user-select: none;
+      line-height: 1;
+    }
+  </style>
 </head>
 
 <body>
+  <h1>JavaScript Course Projects</h1>
+  <p>Repository setup for course assignments.</p>
 
-    <h1>JavaScript Course Projects</h1>
-    <p>Repository setup for course assignments.</p>
+  <h2>Image Gallery</h2>
 
-    <h2>Image Gallery</h2>
+  <!-- Gallery -->
+  <div class="gallery">
+    <img src="https://placehold.co/300x300" alt="Sample image 1">
+    <img src="https://placehold.co/300x300" alt="Sample image 2">
+    <img src="https://placehold.co/300x300" alt="Sample image 3">
+  </div>
 
-   <img src="https://placehold.co/300x300" alt="Sample image 1">
-<img src="https://placehold.co/300x300" alt="Sample image 2">
-<img src="https://placehold.co/300x300" alt="Sample image 3">
+  <!-- Lightbox -->
+  <div id="lightbox" aria-hidden="true">
+    <span id="close" aria-label="Close">&times;</span>
+    <img id="lightbox-img" alt="Expanded image">
+  </div>
 
+  <script>
+    const images = document.querySelectorAll(".gallery img");
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightbox-img");
+    const closeBtn = document.getElementById("close");
 
-    <!-- Lightbox -->
-    <div id="lightbox">
-        <span id="close">&times;</span>
-        <img id="lightbox-img">
-    </div>
+    images.forEach(img => {
+      img.addEventListener("click", () => {
+        lightboxImg.src = img.src;
+        lightbox.style.display = "flex";
+        lightbox.setAttribute("aria-hidden", "false");
+      });
+    });
 
-    <script>
-        const images = document.querySelectorAll(".gallery img");
-        const lightbox = document.getElementById("lightbox");
-        const lightboxImg = document.getElementById("lightbox-img");
-        const closeBtn = document.getElementById("close");
+    function closeLightbox() {
+      lightbox.style.display = "none";
+      lightboxImg.src = "";
+      lightbox.setAttribute("aria-hidden", "true");
+    }
 
-        images.forEach(img => {
-            img.addEventListener("click", () => {
-                lightbox.style.display = "flex";
-                lightboxImg.src = img.src;
-            });
-        });
+    closeBtn.addEventListener("click", closeLightbox);
 
-        closeBtn.addEventListener("click", () => {
-            lightbox.style.display = "none";
-        });
-    </script>
+    // Close when clicking outside the image
+    lightbox.addEventListener("click", (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
 
+    // Close with Escape key
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeLightbox();
+    });
+  </script>
 </body>
 </html>
-
-
-
+```
